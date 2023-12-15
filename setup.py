@@ -5,7 +5,7 @@ setup(
     version='0.1.0',
     url="https://github.com/athulrs177/phase_amplitude_diagram",
     author="Athul Rasheeda Satheesh",
-    author_email="athul.satheesh@kit.edu",
+    author_email="athulrs177@gmail.com",
     packages=["phase_amplitude_diagram"],
     install_requires=[
         'numpy',
