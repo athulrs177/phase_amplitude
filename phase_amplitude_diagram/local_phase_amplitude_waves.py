@@ -53,7 +53,7 @@ def compute_amplitude_and_phase(A: xr.DataArray, stdA, std_dA) -> xr.Dataset:
     return ds
 
 
-def process_lat_lon(data, lat_lon):
+def process_lat_lon(data, lat_lon, stdA, std_dA):
     """
     Process latitude and longitude for a given dataset and return amplitude, theta, and phase.
 
