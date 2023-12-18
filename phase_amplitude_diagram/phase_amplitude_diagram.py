@@ -43,6 +43,8 @@ def draw_filled_arc(radius, theta1, theta2, col, zorder, alpha):
     # Plot the filled region
     plt.fill_between(x_fill, y_fill, color=col, alpha=alpha, edgecolor=None, zorder=zorder)
 
+    return None
+
 def plot_normalized_scatter(A, stdA, std_dA, quantile1, quantile2, ax, wave, time, whiten_center=True, whiten_threshold=1.0):
     """
     Plot a scatter plot of normalized values and highlight the phases.
