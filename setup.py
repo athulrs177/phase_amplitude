@@ -12,6 +12,5 @@ setup(
         'xarray',
         'pandas',
         'matplotlib',
-        'multiprocessing'
     ],
 )
