@@ -11,6 +11,6 @@ setup(
         'numpy',
         'xarray',
         'pandas',
-        'matplotlib'
+        'matplotlib',
     ],
 )
