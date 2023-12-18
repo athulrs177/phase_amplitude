@@ -43,6 +43,8 @@ def draw_filled_arc(radius, theta1, theta2, col, zorder, alpha):
     # Plot the filled region
     plt.fill_between(x_fill, y_fill, color=col, alpha=alpha, edgecolor=None, zorder=zorder)
 
+    return None
+
 def plot_normalized_scatter(A, stdA, std_dA, quantile1, quantile2, ax, wave, time, whiten_center=True, whiten_threshold=1.0):
     """
     Plot a scatter plot of normalized values and highlight the phases.
@@ -59,6 +61,9 @@ def plot_normalized_scatter(A, stdA, std_dA, quantile1, quantile2, ax, wave, tim
     - whiten_center (boolean): Whether the central region (in this version, less than 'whiten_threshold' std) needs to be masked
       default_value: True
     - whiten_threshold: amplitude of the central region that gets masked if whiten_center=True
+
+    Returns: 
+    DataArrays of normalized_A,  nnormalized_derivative
 
     """
 
@@ -147,3 +152,5 @@ def plot_normalized_scatter(A, stdA, std_dA, quantile1, quantile2, ax, wave, tim
     # Change this according to the dataset
     ax.set_xlabel('normalized IMERG')
     ax.set_ylabel('normalized d(IMERG)/dt')
+
+    return normalized_A, normalized_derivative
