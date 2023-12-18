@@ -59,15 +59,11 @@ def process_lat_lon(data, lat_lon):
 
     Parameters:
     - data (xr.Dataset): Full input dataset.
-    - lat_lon (tuple): Tuple containing latitude and longitude values.
+    - lat_lon (tuple): Tuple containing latitude and longitude values.   
 
     Returns:
     - dict: Dictionary containing amplitude, theta, and phase along with their coordinates.
     """
-    
-    stdA = data.std()
-
-    std_dA = data.differentiate('time').std()
     
     lat, lon = lat_lon
     ds = compute_amplitude_and_phase(data.sel(lat=lat, lon=lon), stdA, std_dA)
@@ -81,12 +77,14 @@ def process_lat_lon(data, lat_lon):
         result[var_name] = (var.dims, var.values, {'lat': lat, 'lon': lon})
     return result
 
-def full_dataset(data):
+def full_dataset(data, stdA, std_dA):
     """
     Process the full dataset in parallel for amplitude, theta, and phase.
 
     Parameters:
     - data (xr.Dataset): Input dataset containing spatial and temporal data.
+    - stdA: standard deviation of A over all times, lons and lats
+    - std_dA: standard deviation of dA/dt over all times, lons and lats 
 
     Returns:
     - xr.Dataset: Dataset containing amplitude, theta, and phase for each latitude and longitude combination.
@@ -99,7 +97,7 @@ def full_dataset(data):
     pool = mp.Pool(num_workers)
 
     # Call the process_lat_lon function for each lat-lon combination in parallel
-    results = pool.starmap(process_lat_lon, [(data, lat_lon) for lat_lon in lat_lons])
+    results = pool.starmap(process_lat_lon, [(data, lat_lon, stdA, std_dA) for lat_lon in lat_lons])
 
     # Close the pool to free up resources
     pool.close()
