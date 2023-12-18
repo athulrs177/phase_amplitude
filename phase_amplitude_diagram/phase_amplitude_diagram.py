@@ -147,3 +147,5 @@ def plot_normalized_scatter(A, stdA, std_dA, quantile1, quantile2, ax, wave, tim
     # Change this according to the dataset
     ax.set_xlabel('normalized IMERG')
     ax.set_ylabel('normalized d(IMERG)/dt')
+
+    return normalized_A, normalized_derivative
