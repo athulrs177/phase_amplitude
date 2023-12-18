@@ -62,7 +62,8 @@ def plot_normalized_scatter(A, stdA, std_dA, quantile1, quantile2, ax, wave, tim
       default_value: True
     - whiten_threshold: amplitude of the central region that gets masked if whiten_center=True
 
-    Return: normalized_A and normalized_derivative
+    Returns: 
+    DataArrays of normalized_A,  nnormalized_derivative
 
     """
 
