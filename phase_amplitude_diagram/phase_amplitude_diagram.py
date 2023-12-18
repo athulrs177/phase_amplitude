@@ -43,12 +43,14 @@ def draw_filled_arc(radius, theta1, theta2, col, zorder, alpha):
     # Plot the filled region
     plt.fill_between(x_fill, y_fill, color=col, alpha=alpha, edgecolor=None, zorder=zorder)
 
-def plot_normalized_scatter(A, quantile1, quantile2, ax, wave, time, whiten_center=True, whiten_threshold=1.0):
+def plot_normalized_scatter(A, stdA, std_dA, quantile1, quantile2, ax, wave, time, whiten_center=True, whiten_threshold=1.0):
     """
     Plot a scatter plot of normalized values and highlight the phases.
 
     Parameters:
     - A (xarray.DataArray): Input data to be plotted.
+    - stdA (float): standard deviation of over all times and longitudes of A
+    - std_dA (float): standard deviation of over all times and longitudes of dA/dt
     - quantile1 (float): The quantile value (in percentage) for the lower percentile region (e.g., 95th percentile).
     - quantile2 (float): The quantile value (in percentage) for the higher percentile region (e.g., 99th percentile).
     - ax (matplotlib.axes.Axes): Axes object for the plot.
@@ -58,21 +60,16 @@ def plot_normalized_scatter(A, quantile1, quantile2, ax, wave, time, whiten_cent
       default_value: True
     - whiten_threshold: amplitude of the central region that gets masked if whiten_center=True
 
-    Returns:
-    None
-
-    Example:
-    >>> plot_normalized_scatter(A, quantile1=95, quantile2=99, ax=plt.gca(), wave='MJO', time='time')
     """
 
     # Normalize A by subtracting the mean and dividing by the standard deviation
-    normalized_A = (A - np.nanmean(A)) / np.nanstd(A)
+    normalized_A = (A - np.nanmean(A)) / stdA
 
     # Calculate the first derivative of A
-    first_derivative = A.differentiate('time')
+    first_derivative = A.differentiate('time')#np.gradient(A)
 
     # Normalize the first derivative by subtracting the mean and dividing by the standard deviation
-    normalized_derivative = (first_derivative - np.nanmean(first_derivative)) / np.nanstd(first_derivative)
+    normalized_derivative = (first_derivative - np.nanmean(first_derivative)) / std_dA
 
     normalized_A = normalized_A.sel(time=time)
     normalized_derivative = normalized_derivative.sel(time=time)
